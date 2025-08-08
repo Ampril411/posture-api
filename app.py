@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 from posture_analysis import analyze_posture
 from utils import read_image_from_bytes
+import os
 
 app = Flask(__name__)
+
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
@@ -14,5 +16,6 @@ def analyze():
     result = analyze_posture(image)
     return jsonify(result)
 
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
